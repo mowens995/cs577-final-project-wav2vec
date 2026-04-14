@@ -1,0 +1,6 @@
+data/LibriSpeech/*
+!data/LibriSpeech/.gitkeep
+*.flac
+*.txt
+*.gz
+*.tar

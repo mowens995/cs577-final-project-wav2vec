@@ -1,5 +1,7 @@
 data/LibriSpeech/*
 !data/LibriSpeech/.gitkeep
+__pycache__/
+*.pyc
 *.flac
 *.txt
 *.gz

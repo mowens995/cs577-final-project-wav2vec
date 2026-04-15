@@ -2,6 +2,11 @@ import torch
 import torch.nn as nn
 
 class SimpleTransformerEncoder(nn.Module):
+    """
+    Simplistic 2-layer transformer for debugging and testing
+    - Input:  (B, T, C = 512)
+    - Output: (B, T, C = 512)
+    """
     def __init__(self, embed_dim = 512, num_layers = 2, num_heads = 8, ff_dim = 2048, dropout = 0.1):
         super().__init__()
 
@@ -20,6 +25,11 @@ class SimpleTransformerEncoder(nn.Module):
         return self.encoder(x)
 
 class Wav2VecTransformerEncoder(nn.Module):
+    """
+    Full 12-layer transformer model projecting 512-dim features into 768-dim contextual space
+    - Input:  (B, T, C = 512)
+    - Output: (B, T, C = 768)
+    """
     def __init__(self, embed_dim = 512, transformer_dim = 768, num_layers = 12, num_heads = 12, ff_dim = 3072, dropout = 0.1):
         super().__init__()
 
@@ -46,6 +56,9 @@ class Wav2VecTransformerEncoder(nn.Module):
         return x
     
 def build_transformer(type = "simple"):
+    """
+    Returns a transformer used to identify acoustic features and group them into larger contextual representations of speech and meaning
+    """
     if type == "simple":
         return SimpleTransformerEncoder()
     elif type == "full":

@@ -2,6 +2,11 @@ import torch
 import torch.nn as nn
 
 class PositionalConvEmbedding(nn.Module):
+    """
+    Convolutional neural net used to embed positional information by mixing each timestep with its neighbors
+    - Input:  (B, T, C = 512)
+    - Output: (B, T, C = 512)
+    """
     def __init__(self, embed_dim = 512, kernel_size = 128, groups = 16):
         super().__init__()
 

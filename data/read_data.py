@@ -5,6 +5,9 @@ import torchaudio
 from torch.utils.data import Dataset
 
 class audioImporter(Dataset):
+    """
+    Identifies and iterates over all .flac files in the root directory
+    """
     def __init__(self, root):
         self.files = list(Path(root).rglob("*.flac"))
 

@@ -1,6 +1,11 @@
 import torch.nn as nn
 
 class Wav2VecFeatureEncoder(nn.Module):
+    """
+    Convolutional neural net to extract features from raw audio
+    - Input:  (B, 1, T_audio)
+    - Output: (B, 512, T_audio/320)
+    """
     def __init__(self):
         super().__init__()
         self.conv = nn.Sequential(

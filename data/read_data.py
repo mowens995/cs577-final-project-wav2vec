@@ -21,3 +21,16 @@ class audioImporter(Dataset):
     
     def __len__(self):
         return len(self.files)
+    
+def collate_fn(batch):
+    lengths = [x.shape[-1] for x in batch]
+    max_len = max(lengths)
+
+    padded = []
+    for x in batch:
+        pad = max_len - x.shape[-1]
+        if pad > 0:
+            x = torch.cat([x, x.new_zeros(1, pad)], dim = 1)
+        padded.append(x)
+    
+    return torch.stack(padded, dim = 0)

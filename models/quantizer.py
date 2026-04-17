@@ -45,9 +45,9 @@ class GumbelVectorQuantizer(nn.Module):
         codes = probs.argmax(dim = -1)
 
         codebook = self.codebook.unsqueeze(0).unsqueeze(0)
-        probs = probs.unsqueeze(-1)
+        weights = probs.unsqueeze(-1)
 
-        quantized = (probs * codebook).sum(dim = -2)
-        quantized = quantized.view(B, T, self.dim)
+        quantized = (weights * codebook).sum(dim = -2)
+        quantized = quantized.sum(dim = 2)
 
         return quantized, codes, probs

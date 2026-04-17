@@ -1,6 +1,8 @@
 import sys
 from pathlib import Path
-sys.path.append(str(Path.cwd().parents[0]))
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.append(str(PROJECT_ROOT))
+#sys.path.append(str(Path.cwd().parents[0]))
 
 import torch
 from torch.utils.data import DataLoader
@@ -19,7 +21,8 @@ from training.pretrain import Wav2VecPretrainingModel
 def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    dataset = audioImporter("../data/LibriSpeech/train-clean-5")
+    DATA_ROOT = Path(__file__).resolve().parents[1] / "data" / "LibriSpeech" / "train-clean-5"
+    dataset = audioImporter(DATA_ROOT)
     loader = DataLoader(dataset, batch_size = 4, shuffle = True, collate_fn = collate_fn, num_workers = 4, pin_memory = True)
 
     feature_encoder = Wav2VecFeatureEncoder()
@@ -69,3 +72,6 @@ def main():
         print(f"Saved checkpoint for epoch {epoch+1}")
 
     print("Pretraining complete.")
+
+if __name__ == "__main__":
+    main()

@@ -13,6 +13,8 @@ class Wav2VecPretrainingModel(nn.Module):
         self.diversity_loss = diversity_loss
         self.diversity_weight = diversity_weight
 
+        self.pred_proj = nn.Linear(768, 512)
+
     def forward(self, x):
         feats = self.feature_encoder(x)
         feats = feats.transpose(1, 2)
@@ -22,6 +24,7 @@ class Wav2VecPretrainingModel(nn.Module):
         masked_feats, mask = self.masker(feats)
 
         preds = self.transformer(masked_feats)
+        preds = self.pred_proj(preds)
 
         quantized, codes, probs = self.quantizer(feats)
 
